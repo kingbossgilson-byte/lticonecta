@@ -1,0 +1,375 @@
+<script>
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        window.location.replace("login.html");
+    } else {
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const agora = Date.now() / 1000;
+
+            if (payload.exp < agora) {
+                localStorage.clear();
+                window.location.replace("login.html");
+            }
+        } catch (e) {
+            localStorage.clear();
+            window.location.replace("login.html");
+        }
+    }
+</script>
+
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LTIConecta</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+
+    <!-- Tema mais bonito -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/stylesIndex.css" />
+</head>
+
+<body style="
+            background: url('./assets/images/2416e43d653933f1c510a598eee3801e.jpg') no-repeat center center fixed;
+            background-size: cover;
+        "
+>
+
+    <!-- Jitsi -->
+    <!-- <div id="jitsiContainer" style="height: 80vh; width: 100%; display: none;"></div> -->
+
+    <!-- Relatorio de Atendimento -->
+    <div class="container mt-4" id="relatorioChamadas" style="display: none">
+
+        <!-- Título -->
+        <div class="text-center mb-4">
+            <div class="header-title">Informações de Agendamentos</div>
+        </div>
+
+        <!-- Tabs -->
+        <ul class="nav nav-pills justify-content-between tab-custom mb-4">
+        <li class="nav-item  text-center">
+            <button id="tabAgendada" class="nav-link active w-100">
+            Agendada(s)
+            </button>
+        </li>
+
+        <li class="nav-item  text-center">
+            <button id="tabCompletadas" class="nav-link  w-100">
+            Completada(s)
+            </button>
+        </li>
+
+        <li class="nav-item  text-center">
+            <button id="tabCanceladas" class="nav-link  w-100">
+            Cancelada(s)
+            </button>
+        </li>
+        </ul>
+
+        <!-- Card Relatorio -->     
+            <div  id="sessionsListRelatorio"></div>
+    </div>
+
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay"></div>
+
+
+    <!-- PERFIL -->
+    <div id="bottomSheet" class="bottom-sheet">
+        <div class="sheet-header">
+            <div class="drag-line"></div>
+            <h5 id="sheetTitle"></h5>
+        </div>
+
+        <div id="sheetContent" class="sheet-body"></div>
+    </div>
+    <div id="perfilPage" style="display: none">
+        <div class="bg-primary text-white p-4 rounded-bottom" style="background: #1f4e79 !important">
+            <h5 class="text-center mb-4">Perfil</h5>
+
+            <div class="d-flex align-items-center">
+                <img src="" id="perfilImagem" class="rounded-circle me-3" width="70" height="70" />
+
+                <div>
+                    <h6 class="mb-1 mt-2" id="perfilNome">Nome aqui</h6>
+                    <small id="perfilEmail">email@email.com</small>
+                    <p class="mt-2 small" id="perfilDescricao">
+                        Descrição aqui
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-3">
+            <div onclick="editarPerfil()" class="card p-3 mb-3 shadow-sm" style="cursor: pointer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-person-circle" style="font-size: 2rem; color: cornflowerblue;"></i>
+                        <span>Editar Perfil</span>
+                    </div>
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+            </div>
+
+            <div id="cadProfissionais" onclick="cadastrarProfissional()" class="card p-3 mb-3 shadow-sm" style="cursor: pointer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-person-fill-add" style="font-size: 2rem; color: darkgreen;"></i>
+                        <span>Cadastrar Profissionais</span>
+                    </div>
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+            </div>
+
+            <div onclick="mudarSenha()" class="card p-3 mb-3 shadow-sm" style="cursor: pointer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-shield-lock" style="font-size: 2rem; color: crimson;"></i>
+                        <span>Mudar Senha</span>
+                    </div>
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+            </div>
+
+            <div onclick="logout()" class="card p-3 shadow-sm text-danger" style="cursor: pointer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Sair</span>
+                    </div>
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TELA DE ATENDIMENTO (inicialmente escondida) -->
+    <div id="atendimentoPage" style="display: none; height: 95vh">
+        <div id="videoContainer" style="width: 100%; height: 95%">
+        </div>        
+        <!-- <button onclick="voltarHome()" class="btn btn-light position-absolute m-2">
+                    ← Voltar
+             </button> --> 
+        <div id="logoOverlay">
+            <img src="./assets/images/1.png"/>
+        </div>
+
+    </div>
+    <div class="container py-3">
+        <!-- HEADER -->
+        <div class="text-center mb-3 d-flex justify-content-center">
+            <div class="header-title">
+                <img src="./assets/images/2.png" class="rounded float-start" style="width: 300px;" />
+            </div>
+        </div><br><br>
+        <div class="text-center mb-3 d-flex justify-content-center">
+        <h3  class="m-2" >Seja Bem Vindo(a)</h3><h3 class="m-2"  id="nomeBemVindo"></h3>
+        </div>
+
+        <!-- BUSCA -->
+<!--         <div class="mb-4">
+            <input type="text" class="form-control rounded-pill" placeholder="Pesquisar" />
+        </div>
+ -->
+        <!-- CATEGORIAS -->
+        <h3 class="mb-3">Categorias</h3>
+        <div class="d-flex gap-3 mb-4">
+            <div class="card card-custom p-3 text-center" style="width: 300px">
+                <img src="./assets/images/atendimentoOnline.png" class="img-fluid mb-2" />
+                <small>Atendimento Remoto</small>
+            </div>
+
+            <div class="card card-custom p-3 text-center" style="width: 300px">
+                <img src="./assets/images/atendimentoPresente.png" class="img-fluid mb-2"/>
+                <small>Atendimento Presencial</small>
+            </div>
+        </div>
+
+        <!-- ESPECIALISTAS -->
+        <h3 class="mb-3">Especialistas em destaque</h3>
+        <div class="especialistas-wrapper">
+            <div class="horizontal-scroll mt-3 mb-4" id="especialistasContainer">
+                <!-- Cards serão inseridos aqui -->
+            </div>
+        </div>
+        <!-- Modal QRCode -->
+        <div class="modal fade" id="qrModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">QR Code da Reunião</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body d-flex justify-content-center">
+                <div id="qrModalBody"></div>
+            </div>
+
+            </div>
+        </div>
+        </div>
+        
+        <!-- AGENDA -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                            Agendamento de Sala
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-0">
+                        <!-- HEADER -->
+                         <div id="idReagendamento" style="display: none;"></div>
+                         <div id="agendaTelefone" style="display: none;"></div>
+                        <div class="top-header">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="m-0">Agendar Compromisso</h5>
+                                <span></span>
+                            </div>
+
+                            <div class="mt-4 d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img id="agendaProfilePic" class="specialist-img" />
+                                    <div>
+                                        <h3 class="m-2" id="agendaUsername"></h3>
+                                        <small class="m-2" id="agendaDesignation"></small>
+                                    </div>
+                                </div>
+
+                                <div class="rating">
+                                    <span id="agendaScore"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="container mt-4">
+                            <form id="scheduleForm">
+                                <!-- TÍTULO -->
+                                <h3 id="roomNameReagendar"></h3>
+                                <div class="form-check form-check-inline justify-content-center">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Remoto">
+                                    <label class="form-check-label" for="inlineRadio1">Atendimento On-Line</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Presencial">
+                                    <label class="form-check-label" for="inlineRadio2">Atendimento Presencial</label>
+                                </div>
+                                <div class="mb-3"  id="roomNameTitulo">
+                                    <label class="form-label" id="roomNameTitulo"></label>
+                                    <input type="text" id="roomName" class="form-control"
+                                        placeholder="Informe o nome do compromisso" />
+                                </div>
+
+                                <!-- DATA -->
+                                <div class="mb-4">
+                                    <label class="form-label text-align center">Selecione a Data</label>
+
+                                    <input type="hidden" id="date" />
+
+                                    <div class="d-flex justify-content-center">
+                                        <div id="calendarInline"></div>
+                                    </div>
+                                </div>
+                                <!-- HORA -->
+                                <div class="mb-3">
+                                    <label>Horário</label>
+                                    <input type="time" id="time" class="form-control" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- BOTÃO FIXO -->
+                    <div class="modal-footer">
+                        <a href="index.html" class="btn btn-secondary">
+                            Fechar
+                        </a>
+                        <button type="button" class="btn btn-primary" id="btnAgendar">
+                            Agendar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRÓXIMAS SESSÕES -->
+        <div class="d-flex justify-content-between align-items-center">
+            <h3>Minha Agenda</h3>
+            <small class="text-primary">Ver Todos</small>
+        </div>
+
+        <div class="horizontal-scroll mt-3 mb-4" id="sessionsListHome"></div>
+
+        <!-- VISUALIZADOS -->
+        <h3>Visualizados recentemente</h3>
+        <div id="recentesContainer" class="horizontal-scroll mt-3 mb-4">
+            <p>Nenhuma Visualização Rescente...</p>
+        </div>
+
+    </div>
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+  <div class="container mt-2">
+    <div class="row text-center">
+
+      <div class="col">
+        <a href="index.html" class="active">
+          <i class="bi bi-house-fill"></i>
+          Home
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="#" id="btnAtendimento">
+          <i class="bi bi-chat-dots"></i>
+         Atendimento
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="#" onclick="mostrarRelatorio()">
+          <i class="bi bi-bookmark-fill"></i>
+          Relatório
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="#" onclick="mostrarPerfil()">
+          <i class="bi bi-person-circle"></i>
+          Perfil</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+    <script src="https://unpkg.com/@daily-co/daily-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+    <script src="https://meet.jit.si/external_api.js"></script>
+
+
+    <script src="./js/especialistas.js"></script>
+    <script src="js/schedule.js"></script>
+    <script src="./js/profile.js"></script>
+    <script src="./js/relatorioAtendimento.js"></script>
+</body>
+
+</html>

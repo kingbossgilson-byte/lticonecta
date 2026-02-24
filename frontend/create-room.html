@@ -1,0 +1,13 @@
+<button onclick="criarSala()">Criar reunião</button>
+
+<script>
+async function criarSala() {
+  const res = await fetch("http://gilson-1.tailb6453c.ts.net:3000/create-room", {
+    method: "POST"
+  });
+
+  const data = await res.json();
+
+  window.location.href = "call.html?room=" + data.url;
+}
+</script>
