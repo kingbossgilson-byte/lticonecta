@@ -1,5 +1,5 @@
 
-const API = "http://gilson-1.tailb6453c.ts.net:3000";
+const API = "https://lticonecta.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);

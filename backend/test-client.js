@@ -1,6 +1,6 @@
 const { io } = require("socket.io-client");
 
-const socket = io("http://gilson-1.tailb6453c.ts.net:3000", {
+const socket = io("https://lticonecta.onrender.com", {
   transports: ["websocket"], // força WebSocket
 });
 
