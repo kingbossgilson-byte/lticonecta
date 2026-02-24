@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 function carregarEspecialistas() {
-    fetch("/users")
+    fetch("https://lticonecta.onrender.com/users")
         .then(response => response.json())
         .then(data => {
             renderEspecialistas(data);
