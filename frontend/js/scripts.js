@@ -36,7 +36,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     let accountType = document.getElementById("accountType").value;
 
     try {
-        let response = await fetch("/auth/login", {
+        let response = await fetch("http://gilson-1.tailb6453c.ts.net:3000/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ 
@@ -46,10 +46,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             }),
         });
 
-        // let data = await response.json();
-        const text = await response.text();
-        console.log("Resposta do servidor:", text);
-        return;
+        let data = await response.json();
 
         if (response.ok) {
 
