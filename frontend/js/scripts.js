@@ -36,7 +36,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     let accountType = document.getElementById("accountType").value;
 
     try {
-        let response = await fetch("https://lticonecta.onrender.com/auth/login", {
+        let response = await fetch("/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ 
