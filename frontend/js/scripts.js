@@ -46,7 +46,10 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             }),
         });
 
-        let data = await response.json();
+        // let data = await response.json();
+        const text = await response.text();
+        console.log("Resposta do servidor:", text);
+        return;
 
         if (response.ok) {
 
