@@ -78,7 +78,7 @@ exports.session = async (req, res) => {
                   }
         try {
 
-              await axios.post('http://localhost:8000/whatsapp/send', {
+              await axios.post('https://multifaceted-gabriella-subconcavely.ngrok-free.dev/whatsapp/send', {
                 to: cellphone,
                 text: `Olá ${name}, foi agendada uma reuniao!
 
