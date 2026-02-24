@@ -63,7 +63,7 @@ async function carregarPerfil() {
         return;
     }
 
-    const response = await fetch(`https://lticonecta.onrender.com/users/id/${userId}`);
+    const response = await fetch(`/users/id/${userId}`);
     const user = await response.json();
 
     document.getElementById("perfilNome").innerText = user.username;
@@ -147,7 +147,7 @@ async function salvarNovaSenha() {
         return;
     }
 
-    const response = await fetch(`https://lticonecta.onrender.com/users/password/${userId}`, {
+    const response = await fetch(`/users/password/${userId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -281,7 +281,7 @@ async function salvarPerfil() {
         formData.append("profilePic", fileInput.files[0]);
     }
 
-    const response = await fetch(`https://lticonecta.onrender.com/users/profile/${userId}`, {
+    const response = await fetch(`/users/profile/${userId}`, {
         method: "PUT",
         body: formData
     });
