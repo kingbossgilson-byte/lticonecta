@@ -83,7 +83,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             showModal(content);
 
             setTimeout(function () {
-                if (data.user.accountType === "Cliente") {
+                if (data.user.accountType === "Cliente" || ata.user.isAdministrator === 1) {
                     window.location.href = "index.html";
                 } else {
                     window.location.href = "profissional.html";
