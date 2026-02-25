@@ -37,7 +37,7 @@ function adicionarRelatorioTela() {
 
                 <!-- 🔹 FOTO -->
                 <div class="col-3 text-center">
-                    <img src="http://localhost/apiFlutter/frontend/${sessao.image}" 
+                    <img src="http://localhost/lticonecta/frontend/${sessao.image}" 
                          class="img-fluid rounded-circle"
                          style="width:80px;height:80px;object-fit:cover;">
                     <p class="mt-2 fw-bold">${sessao.name}</p>
@@ -142,19 +142,17 @@ function renderizarSessoes(lista, status) {
 
                     agrupadoPorData[sessao.date] += duracao;
                 } else {
+               
+                if (sessao.date) {
+                    const duracao = calcularDuracaoMinutos(sessao.startTime, sessao.endTime);
 
-
-                sessao.daily.forEach(d => {
-                    const meetingDate = new Date(d.startTime * 1000)
-                        .toISOString()
-                        .split("T")[0];
-
-                    if (!agrupadoPorData[meetingDate]) {
-                        agrupadoPorData[meetingDate] = 0;
+                    if (!agrupadoPorData[sessao.date]) {
+                        agrupadoPorData[sessao.date] = 0;
                     }
 
-                    agrupadoPorData[meetingDate] += d.duration || 0;
-                });
+                    agrupadoPorData[sessao.date] += duracao || 0;
+                }
+              
             }
 
             datasParaRenderizar = Object.entries(agrupadoPorData).map(
@@ -182,8 +180,8 @@ function renderizarSessoes(lista, status) {
                         <img src="${sessao.image || './assets/images/default.jpg'}"
                         class="specialist-img me-2">
                         <div>
-                            <h6 class="m-2" id="agendaUsername">${sessao.name}</h6>
-                            <small class="m-2" id="agendaDesignation">${sessao.designation}</small>
+                            <h6 class="m-2">${sessao.name}</h6>
+                            <small class="m-2">${sessao.designation}</small>
                         </div>
                           
                     </div>
@@ -197,7 +195,7 @@ function renderizarSessoes(lista, status) {
                         ${
                             item.duracao !== null
                                 ? `<small class="text-primary">
-                                    Entrada: ${sessao.checkInTime} - Saída: ${sessao.endTime} Duração: ${formatDuration(item.duracao)}
+                                    Entrada: ${sessao.checkInTime || sessao.startTime} - Saída: ${sessao.endTime} Duração: ${formatDuration(item.duracao)}
                                    </small><br>`
                                 : ""
                         }
@@ -383,7 +381,7 @@ async function carregarCompletadas() {
     const finalizadas = sessoes.filter(sessao => {
          if (sessao.isCompleted?.data?.[0] !== 1) return false;
 
-        const diaHoras = sessao.date <= hoje && sessao.endTime >= sessao.checkInTime;
+        const diaHoras = sessao.date <= hoje && sessao.endTime >= sessao.startTime;
 
         return diaHoras;
 });
