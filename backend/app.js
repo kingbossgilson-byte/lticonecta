@@ -14,7 +14,11 @@ const agendaRoutes = require('./routes/agenda.routes');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "*", // depois você pode restringir
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express.json());
 
 app.get('/', (req, res) => {
