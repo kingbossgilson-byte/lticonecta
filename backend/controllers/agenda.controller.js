@@ -97,7 +97,10 @@ exports.session = async (req, res) => {
             } catch (error) {
               console.error('Erro ao enviar WhatsApp:', error.message);
             }
-        res.json({ message: 'Sessão criada com sucesso', roomUrl: dailyRoom.url });
+                res.json({
+                  message: 'Sessão criada com sucesso',
+                  roomUrl: dailyRoom?.url || null
+                });
       }
     );
   };
