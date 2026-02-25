@@ -226,6 +226,10 @@ async function salvarAgendamento({ id = null, isCanceled = 0, startTime = null, 
             alertDiv.innerText = finalId ? "Agendamento atualizado com sucesso!" : "Agendamento realizado com sucesso!";
             document.getElementById("scheduleForm").parentElement.appendChild(alertDiv);
 
+            document.getElementById("btnFechar").style.display = 'none';
+            // Preencher dados dentro da modal
+            document.getElementById("linkFechar").style.display = 'block';
+
             // Limpa form e modal
             document.getElementById("scheduleForm").reset();
             document.getElementById("idReagendamento").innerText = "";  
