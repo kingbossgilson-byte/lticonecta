@@ -34,6 +34,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     let email = document.getElementById("inputEmail").value;
     let password = document.getElementById("inputPassword").value;
     let accountType = document.getElementById("accountType").value;
+    console.log("JWT:", process.env.JWT_SECRET);
 
     try {
         let response = await fetch("https://lticonecta.onrender.com/auth/login", {
