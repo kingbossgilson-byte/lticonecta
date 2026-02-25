@@ -69,46 +69,55 @@ exports.login = (req, res) => {
     'SELECT * FROM dummy_user WHERE email = ?',
     [email],
     async (err, results) => {
-      if (err || results.length === 0) {
-        return res.status(401).json({ error: 'Usuário não encontrado' });
-      }
+      try {
+        if (err) {
+          console.error("Erro MySQL:", err);
+          return res.status(500).json({ error: "Erro no servidor" });
+        }
 
-      const user = results[0];
+        if (results.length === 0) {
+          return res.status(401).json({ error: "Usuário não encontrado" });
+        }
 
-      // 🔐 Valida senha
-      const valid = await bcrypt.compare(password.trim(), user.password);
-      if (!valid) {
-        return res.status(401).json({ error: 'Senha inválida' });
-      }
+        const user = results[0];
 
-      // 🧠 Valida tipo de conta
-      if (user.accountType !== accountType) {
-        return res.status(403).json({
-          error: 'Você não tem permissão para acessar esta conta',
+        const valid = await bcrypt.compare(password.trim(), user.password);
+        if (!valid) {
+          return res.status(401).json({ error: "Senha inválida" });
+        }
+
+        if (user.accountType !== accountType) {
+          return res.status(403).json({
+            error: "Você não tem permissão para acessar esta conta",
+          });
+        }
+
+        const token = jwt.sign(
+          { id: user.id, username: user.username, accountType: user.accountType },
+          JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+
+        return res.json({
+          token,
+          user: {
+            id: user.id,
+            name: user.username,
+            enterprise: user.enterprise,
+            summary: user.summary,
+            email: user.email,
+            accountType: user.accountType,
+            designation: user.designation,
+            score: user.score,
+            profilePic: user.profilePic,
+            isAdministrator: user.isAdministrator,
+          },
         });
+
+      } catch (error) {
+        console.error("Erro interno login:", error);
+        return res.status(500).json({ error: "Erro interno no servidor" });
       }
-
-      const token = jwt.sign(
-        { id: user.id, username: user.username, accountType: user.accountType },
-        process.env.JWT_SECRET,
-        { expiresIn: '1d' }
-      );
-
-      res.json({
-        token,
-        user: {
-          id: user.id,
-          name: user.username,
-          enterprise: user.enterprise,
-          summary: user.summary,
-          email: user.email,
-          accountType: user.accountType,
-          designation: user.designation,
-          score: user.score,
-          profilePic: user.profilePic,
-          isAdministrator: user.isAdministrator,
-        },
-      });
     }
   );
 };
