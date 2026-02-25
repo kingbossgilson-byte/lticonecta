@@ -129,8 +129,8 @@ function abrirModal(user) {
         document.getElementById("staticBackdrop")
     );
     
-    modal.show();
     document.getElementById("btnAgendar").innerText = "Agendar";
+    modal.show();
 }
 
 
