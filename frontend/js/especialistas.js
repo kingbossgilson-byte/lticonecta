@@ -117,8 +117,8 @@ function abrirModal(user) {
     // Preencher dados dentro da modal
     document.getElementById("roomNameTitulo").style.display = 'block';
     document.getElementById("roomName").innerText = user.sessionName;
-    document.getElementById("agendaUsername").innerText = user.username;
     document.getElementById("agendaTelefone").innerText = user.cellphone;
+    document.getElementById("agendaUsername").innerText = user.username;
     document.getElementById("agendaDesignation").innerText = user.designation;
     document.getElementById("agendaScore").innerText = "★".repeat(score);
     document.getElementById("agendaProfilePic").src =
