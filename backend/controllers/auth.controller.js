@@ -91,7 +91,7 @@ exports.login = (req, res) => {
             error: "Você não tem permissão para acessar esta conta",
           });
         }
-
+        console.log("JWT:", process.env.JWT_SECRET);
         const token = jwt.sign(
           { id: user.id, username: user.username, accountType: user.accountType },
           JWT_SECRET,
