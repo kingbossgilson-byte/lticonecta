@@ -1,4 +1,5 @@
 /* const mysql = require('mysql2');
+
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -25,4 +26,4 @@ db.getConnection((err, connection) => {
   }
 });
 
-module.exports = db.promise();
+module.exports = db;
