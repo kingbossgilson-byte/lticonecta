@@ -41,7 +41,14 @@ exports.session = async (req, res) => {
     let dailyRoom;
 
       try {
-        dailyRoom = await createDailyRoom(novaSessao);
+            // ✅ Só cria sala se callType for "Remoto"
+            if (callType === "Remoto") {
+              dailyRoom = await createDailyRoom(novaSessao);
+              console.log("Sala Daily criada:", dailyRoom.url);
+            } else {
+              console.log("Sala Daily não criada, tipo de chamada:", callType);
+            }
+
       } catch (error) {
         console.error("Erro ao criar sala Daily:", error.response?.data || error.message);
         return res.status(500).json({ error: "Erro ao criar sala na Daily" });
@@ -65,7 +72,7 @@ exports.session = async (req, res) => {
         fullImage,
         isCompleted,
         isCanceled,
-        dailyRoom.url
+        dailyRoom?.url || roomUrl || null
       ],
       async (err, result) =>  {
         if (err) {
@@ -85,7 +92,7 @@ exports.session = async (req, res) => {
                 Solicitante: ${clientName}
                 Data: ${date}
                 Horário: ${startTime}
-                Link da sala: ${dailyRoom.url}`
+                Link da sala: ${dailyRoom?.url ?? 'Presencial'}`
               });
             } catch (error) {
               console.error('Erro ao enviar WhatsApp:', error.message);
