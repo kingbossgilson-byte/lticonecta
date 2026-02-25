@@ -3,7 +3,7 @@ const API = "";
 
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+    const id = params.get("id");    
 
     if (id) {
         carregarEspecialista(id);
@@ -25,7 +25,7 @@ const relatorioChamadas = document.getElementById("relatorioChamadas");
 async function carregarEspecialista(id) {
     try {
         const response = await fetch(API + "/users/id/" + id);
-        const user = await response.json();
+        const user = await response.json();        
 
         if (!response.ok) {
             console.error(user.error);
@@ -50,12 +50,12 @@ function abrirAtendimento() {
     homeContainer.style.display = "none";
     perfilPage.style.display = "none";
     relatorioChamadas.style.display = "none";
-    atendimentoPage.style.display = "block";
+    atendimentoPage.style.display = "block";    
     iniciarDaily();
 }
 
 // Mostrar a pagina Reunião e Abrir a Daily
-if (btnAtendimento) {
+if(btnAtendimento){
     btnAtendimento.addEventListener("click", function (e) {
         e.preventDefault();
         abrirAtendimento();
@@ -123,7 +123,7 @@ function iniciarDaily() {
 
         callFrame.destroy();
         callFrame = null;
-    });
+    });    
 
     callFrame.join({
         // url: roomAtual || "https://vlibras.daily.co/salanica2_1770950888039",
@@ -145,16 +145,16 @@ function voltarHome() {
 
 
 // Abrir a modal de agendamento
-if (btnAgendar) {
+if(btnAgendar){
     btnAgendar.addEventListener("click", async (e) => {
         e.preventDefault();
-        salvarAgendamento();
+        salvarAgendamento();    
     });
 }
 
 
 async function salvarAgendamento({ id = null, isCanceled = 0, startTime = null, dateAgenda = null } = {}) {
-
+    
     const token = localStorage.getItem("token");
 
     const idReagendamento = document.getElementById("idReagendamento").innerText;
@@ -165,11 +165,11 @@ async function salvarAgendamento({ id = null, isCanceled = 0, startTime = null, 
     const designation = document.getElementById("agendaDesignation").innerText;
     const img = document.getElementById("agendaProfilePic");
     const especialistaImagem = img.getAttribute("src");
-    const sessionName = document.getElementById("roomName").value ||
-        document.getElementById("roomNameReagendar").innerText;
+    const sessionName = document.getElementById("roomName").value || 
+                        document.getElementById("roomNameReagendar").innerText;
     const date = document.getElementById("date").value || dateAgenda;
     const time = document.getElementById("time").value;
-    const radioSelecionado = document.querySelector('input[name="inlineRadioOptions"]:checked');
+    const radioSelecionado  = document.querySelector('input[name="inlineRadioOptions"]:checked');
 
     const tipoAtendimento = radioSelecionado ? radioSelecionado.value : '';
 
@@ -189,28 +189,49 @@ async function salvarAgendamento({ id = null, isCanceled = 0, startTime = null, 
     };
 
     try {
-        const response = finalId
-            ? await fetch(`${API}/agenda/${finalId}`, { method: "PUT", headers, body: JSON.stringify(payload) })
-            : await fetch(`${API}/agenda`, { method: "POST", headers, body: JSON.stringify(payload) });
+        let response;
 
-        let data = {};
-        try { data = await response.json(); } catch (e) { /* ignorar se não for JSON */ }
+        if (finalId) {
+            response = await fetch(`${API}/agenda/${finalId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify(payload)
+            });
+        } else {
+            if (!validarFormularioAgendamento()) {
+                return; // 🔥 Para execução se inválido
+            } else {
+                response = await fetch(`${API}/agenda`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token
+                    },
+                    body: JSON.stringify(payload)
+                });
+            }
+        }
+
+        const data = await response.json();
 
         if (response.ok) {
-            if (isCanceled == 1) {
+            if(isCanceled == 1){              
             } else {
-                const alertDiv = document.createElement("div");
-                alertDiv.className = "alert alert-success mt-2";
-                alertDiv.role = "alert";
-                alertDiv.innerText = finalId ? "Agendamento atualizado com sucesso!" : "Agendamento realizado com sucesso!";
-                document.getElementById("scheduleForm").parentElement.appendChild(alertDiv);
+            const alertDiv = document.createElement("div");
+            alertDiv.className = "alert alert-success mt-2";
+            alertDiv.role = "alert";
+            alertDiv.innerText = finalId ? "Agendamento atualizado com sucesso!" : "Agendamento realizado com sucesso!";
+            document.getElementById("scheduleForm").parentElement.appendChild(alertDiv);
 
-                document.getElementById("btnFechar").style.display = 'none';
-                document.getElementById("linkFechar").style.display = 'block';
+            document.getElementById("btnFechar").style.display = 'none';
+            document.getElementById("linkFechar").style.display = 'block';
 
-                // Limpa form e modal
-                document.getElementById("scheduleForm").reset();
-                document.getElementById("idReagendamento").innerText = "";
+            // Limpa form e modal
+            document.getElementById("scheduleForm").reset();
+            document.getElementById("idReagendamento").innerText = "";  
             }
         } else {
             alert(data.error || "Erro ao salvar agendamento");
@@ -332,12 +353,12 @@ async function carregarSessoes() {
                 0
             );
 
-            const agenda = dataHoraSessao >= now;
+            const agenda =  dataHoraSessao >= now;
             const canceladas = dataHoraSessao <= now && sessao.endTime == null && sessao.isCompleted?.data?.[0] == 0;
 
-            if (canceladas) {
-                salvarAgendamento({ id: sessao.id, isCanceled: 1, startTime: sessao.startTime, dateAgenda: sessao.date });
-            }
+             if (canceladas) {
+                salvarAgendamento({id: sessao.id, isCanceled: 1, startTime: sessao.startTime, dateAgenda: sessao.date});
+             }
 
             if (agenda) {
                 const card = document.createElement("div");
@@ -358,19 +379,19 @@ async function carregarSessoes() {
                         <button class="btn btn-light btn-sm rounded-pill btn-agendar">
                             Reagendar
                         </button>
-                        ${sessao.callType === 'Presencial'
-                        ? `<small 
+                        ${sessao.callType === 'Presencial' 
+                            ? `<small 
                                     class="status-badge text-bg-warning mt-0 ">
                                     Presencial
                                 </small>`
 
-                        : `<button 
+                            : `<button 
                                     class="btn btn-primary btn-sm rounded-pill btn-chamar">
                                     Chamar
                                 </button>`
-                    }  
+                        }  
                     </div>
-                    ${sessao.callType === 'Remoto'
+                    ${sessao.callType === 'Remoto' 
                         ? `
                             <div class="mt-2 d-flex justify-content-between">
                                 <button class="btn btn-outline-secondary btn-sm rounded-pill btn-copiar"
