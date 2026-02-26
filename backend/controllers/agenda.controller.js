@@ -240,6 +240,11 @@ exports.updateSession = (req, res) => {
     values.push(req.body.checkInTime);
   }
 
+  if (req.body.startDate !== undefined) {
+  fields.push("startDate = ?");
+  values.push(req.body.startDate);
+  }
+
   if (fields.length === 0) {
     return res.status(400).json({ error: "Nada para atualizar" });
   }

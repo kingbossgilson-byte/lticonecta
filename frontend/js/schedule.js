@@ -353,7 +353,7 @@ async function carregarSessoes() {
                 0
             );
 
-            const agenda =  dataHoraSessao >= now;
+            const agenda =  dataHoraSessao >= now && (!sessao.endTime || !sessao.checkInTime);
             const canceladas = dataHoraSessao <= now && sessao.endTime == null && sessao.isCompleted?.data?.[0] == 0;
 
              if (canceladas) {
