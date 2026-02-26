@@ -153,7 +153,7 @@ if(btnAgendar){
 }
 
 
-async function salvarAgendamento({ id = null, isCanceled = 0, startTime = null, dateAgenda = null } = {}) {
+async function salvarAgendamento({ id = null, isCanceled = 0, startTime = null, dateAgenda = null, callType = null } = {}) {
     
     const token = localStorage.getItem("token");
 
@@ -171,7 +171,7 @@ async function salvarAgendamento({ id = null, isCanceled = 0, startTime = null, 
     const time = document.getElementById("time").value;
     const radioSelecionado  = document.querySelector('input[name="inlineRadioOptions"]:checked');
 
-    const tipoAtendimento = radioSelecionado ? radioSelecionado.value : '';
+    const tipoAtendimento = radioSelecionado ? radioSelecionado.value : callType;
 
     const payload = {
         idCliente: localStorage.getItem("usuarioId"),
@@ -242,6 +242,15 @@ async function salvarAgendamento({ id = null, isCanceled = 0, startTime = null, 
         alert("Erro ao conectar com servidor");
     }
 }
+
+// Mostrar a pagina Reunião e Abrir a Daily
+if(btnFechar){
+    btnFechar.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById("scheduleForm").reset();
+    });
+}
+
 
 function validarFormularioAgendamento() {
 
@@ -357,7 +366,7 @@ async function carregarSessoes() {
             const canceladas = dataHoraSessao <= now && sessao.endTime == null && sessao.isCompleted?.data?.[0] == 0;
 
              if (canceladas) {
-                salvarAgendamento({id: sessao.id, isCanceled: 1, startTime: sessao.startTime, dateAgenda: sessao.date});
+                salvarAgendamento({id: sessao.id, isCanceled: 1, startTime: sessao.startTime, dateAgenda: sessao.date, callType: sessao.callType});
              }
 
             if (agenda) {
