@@ -132,6 +132,7 @@ function renderizarSessoes(lista, status) {
         // 🔹 COMPLETADA
         else {
             const agrupadoPorData = {};
+            const dataInicio = !sessao.startDate ? sessao.date : new Date(sessao.startDate).toISOString().split("T")[0];
 
                 if (sessao.checkInTime && sessao.endTime) {
                     const duracao = calcularDuracaoMinutos(sessao.checkInTime, sessao.endTime);
@@ -142,8 +143,10 @@ function renderizarSessoes(lista, status) {
 
                     agrupadoPorData[sessao.date] += duracao;
                 } else {
+
                
                 if (sessao.date) {
+                    
                     const duracao = calcularDuracaoMinutos(sessao.startTime, sessao.endTime);
 
                     if (!agrupadoPorData[sessao.date]) {
@@ -157,10 +160,10 @@ function renderizarSessoes(lista, status) {
 
             datasParaRenderizar = Object.entries(agrupadoPorData).map(
                 ([data, duracao]) => ({
-                    data: sessao.date,
-                    hora: sessao.startTime,
+                    data: dataInicio,
+                    hora: sessao.checkInTime || sessao.startTime,
                     modelo: sessao.callType,
-                    duracao: duracao ?? sessao.duration
+                    duracao: duracao
                 })
             );
         }
@@ -195,7 +198,7 @@ function renderizarSessoes(lista, status) {
                         ${
                             item.duracao !== null
                                 ? `<small class="text-primary">
-                                    Entrada: ${sessao.checkInTime || sessao.startTime} - Saída: ${sessao.endTime} Duração: ${formatDuration(item.duracao)}
+                                    Entrada: ${sessao.checkInTime || sessao.endTime} - Saída: ${sessao.endTime} Duração: ${formatDuration(item.duracao)}
                                    </small><br>`
                                 : ""
                         }
@@ -229,6 +232,7 @@ async function fazerCheck(id, tipo) {
 
     if (tipo === "checkin") {
         body.checkInTime = horaAtual;
+        body.startDate = agora;
     }
 
     if (tipo === "checkout") {
@@ -381,7 +385,7 @@ async function carregarCompletadas() {
     const finalizadas = sessoes.filter(sessao => {
          if (sessao.isCompleted?.data?.[0] !== 1) return false;
 
-        const diaHoras = sessao.date <= hoje && sessao.endTime >= sessao.startTime;
+        const diaHoras = (sessao.date <= hoje || sessao.date >= hoje) && (sessao.endTime || sessao.startTime);
 
         return diaHoras;
 });
