@@ -8,12 +8,12 @@ const JWT_SECRET = process.env.JWT_SECRET || 'SEGREDO_SUPER_FORTE';
 
 // register
 exports.register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, accountType, dataCreate } = req.body;
   const hash = await bcrypt.hash(password, 10);
 
   db.query(
-    'INSERT INTO dummy_user (username, email, password) VALUES (?, ?, ?)',
-    [username, email, hash],
+    'INSERT INTO dummy_user (username, email, password, accountType, dataCreate) VALUES (?, ?, ?, ?, ?)',
+    [username, email, hash, accountType, dataCreate],
     (err) => {
       if (err) {
                 console.error('ERRO MYSQL:', err);
