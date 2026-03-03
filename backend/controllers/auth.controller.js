@@ -15,14 +15,21 @@ exports.register = async (req, res) => {
     'INSERT INTO dummy_user (username, email, password, accountType, dataCreate) VALUES (?, ?, ?, ?, ?)',
     [username, email, hash, accountType, dataCreate],
     (err) => {
-      if (err) {
-                console.error('ERRO MYSQL:', err);
-                return res.status(500).json({
-                    error: 'Erro ao criar usuário',
-                    details: err.sqlMessage || err.message,
-                    code: err.code,
-                });
-                }
+        if (err.errno === 1062) {
+                  return res.status(500).json({
+                      error: 'Já possui um cadastro com esse E-mail',
+                      details: err.sqlMessage || err.message,
+                      code: err.code,
+                  });
+        }
+        else if (err) {
+                  console.error('ERRO MYSQL:', err);
+                  return res.status(500).json({
+                      error: 'Erro ao criar usuário',
+                      details: err.sqlMessage || err.message,
+                      code: err.code,
+                  });
+                  }
       res.json({ message: 'Usuário criado com sucesso' });
     }
   );
