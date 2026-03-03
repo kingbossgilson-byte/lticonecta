@@ -9,10 +9,10 @@ async function salvarProfissional() {
     const password = document.getElementById("inputPassword").value.trim();
     const confirmarSenha = document.getElementById("inputPasswordConfirm").value.trim();
 
-    if (!nome || !sobreNome || !email || !password || !confirmarSenha) {
+/*     if (!nome || !sobreNome || !email || !password || !confirmarSenha) {
         alert("Preencha todos os campos.");
         return;
-    }
+    } */
 
     if (password !== confirmarSenha) {
         alert("As senhas não coincidem!");
@@ -48,7 +48,11 @@ async function salvarProfissional() {
             // Limpa form e modal
             document.getElementById("registerForm").reset();
         } else {
-            alert(data.error || "Erro ao salvar cadastro");
+            const alertDiv = document.createElement("div");
+            alertDiv.className = "alert alert-danger mt-2";
+            alertDiv.role = "alert";
+            alertDiv.innerText = data.error || "Erro ao salvar cadastro";
+            document.getElementById("registerForm").parentElement.appendChild(alertDiv);
         }
 
     } catch (error) {
@@ -56,3 +60,22 @@ async function salvarProfissional() {
         alert("Erro ao conectar com servidor");
     }
 }
+
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('click', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
