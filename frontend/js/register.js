@@ -1,4 +1,4 @@
-const API = "http://gilson-1.tailb6453c.ts.net:3000";
+const API = "https://lticonecta.onrender.com";
 
 async function salvarProfissional() {
 
