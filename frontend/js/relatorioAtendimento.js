@@ -368,7 +368,7 @@ async function carregarAgendadas() {
         const agenda =  dataHoraSessao >= now;
         return agenda;
     });
-
+    document.getElementById("notifica").innerText = agendadas.length;
     renderizarSessoes(agendadas, "Agendada");
 }
 

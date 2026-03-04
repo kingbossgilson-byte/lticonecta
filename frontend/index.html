@@ -184,15 +184,75 @@
  -->
         <!-- CATEGORIAS -->
         <h3 class="mb-3">Categorias</h3>
-        <div class="d-flex gap-3 mb-4">
-            <div class="card card-custom p-3 text-center" style="width: 300px">
-                <img src="./assets/images/modelo_online.png" class="img-fluid mb-2" />
+        <div class="d-flex gap-3 align-items-stretch">
+            <div class="card card-custom p-3 text-center h-100">
+                <img src="./assets/images/modelo_online.png" class="img-fluid mb-2"  style="width: 350px; height: 158px;"/>
                 <small>Atendimento Remoto</small>
             </div>
 
-            <div class="card card-custom p-3 text-center" style="width: 300px">
-                <img src="./assets/images/presencial_imagem.png" class="img-fluid mb-2"/>
+            <div class="card card-custom p-3 text-center h-100" >
+                <img src="./assets/images/presencial_imagem.png" class="img-fluid mb-2" style="width: 350px; height: 158px;"/>
                 <small>Atendimento Presencial</small>
+            </div>
+
+            <div class="accordion" id="accordionExample" style="width: 600px">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="bi bi-book-half m-1" style="font-size: 2rem; color: cornflowerblue;"></i>
+                            <span>Objetivo dessa Aplicação</span>                            
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>Agendamento de Reuniões(Online/Presencial).</strong> Essa aplicação foi elaborada com o proprósito de facilitar
+                            a interação entre o Cliente e os Profissionais de Interpretação da Lingra Brasileira de Sinais.
+
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <i class="bi bi-calendar2-week m-1" style="font-size: 2rem; color: cornflowerblue;"></i>
+                            <span>Agendamentos</span>
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>This is the second item's accordion body.</strong> It is hidden by default, until
+                            the collapse plugin adds the appropriate classes that we use to style each element. These
+                            classes control the overall appearance, as well as the showing and hiding via CSS
+                            transitions. You can modify any of this with custom CSS or overriding our default variables.
+                            It's also worth noting that just about any HTML can go within the
+                            <code>.accordion-body</code>, though the transition does limit overflow.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <i class="bi bi-bar-chart-fill m-1" style="font-size: 2rem; color: cornflowerblue;"></i>
+                            <span>Relatórios de Agendas</span>                              
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the
+                            collapse plugin adds the appropriate classes that we use to style each element. These
+                            classes control the overall appearance, as well as the showing and hiding via CSS
+                            transitions. You can modify any of this with custom CSS or overriding our default variables.
+                            It's also worth noting that just about any HTML can go within the
+                            <code>.accordion-body</code>, though the transition does limit overflow.
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -346,7 +406,10 @@
         <div class="col">
             <a href="#" onclick="mostrarRelatorio()">
             <i class="bi bi-bar-chart-steps" style="color: blue;"></i>
-            Relatório
+            Minha agenda/Relatório
+            <span
+                class="position-absolute top-0 start-1 translate-middle badge rounded-pill bg-danger"><small
+                    id="notifica"></small></span>
             </a>
         </div>
 
