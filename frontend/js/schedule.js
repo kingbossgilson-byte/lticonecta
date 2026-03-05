@@ -350,7 +350,12 @@ async function carregarSessoes() {
         const minutes = String(now.getMinutes()).padStart(2, '0');
         const agora = `${hours}:${minutes}`;
 
-        document.getElementById("sessionsListHome").innerHTML = "";
+        const listHome = document.getElementById("sessionsListHome");
+
+        if (listHome) {
+            listHome.innerText = '';
+        }
+
 
         sessoes.forEach((sessao, i) => {
 
