@@ -323,7 +323,11 @@ async function carregarSessoes() {
     const token = localStorage.getItem("token");
     const idCliente = localStorage.getItem("usuarioId");
     const userName = localStorage.getItem("usuarioNome");
-    document.getElementById("nomeBemVindo").innerText = userName;
+    const bemVindo = document.getElementById("nomeBemVindo");
+
+    if (bemVindo) {
+        bemVindo.innerText = userName;
+    }
 
     try {
 
