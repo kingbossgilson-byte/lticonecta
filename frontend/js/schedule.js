@@ -315,6 +315,50 @@ function adicionarSessaoNaTela(sessao) {
     container.prepend(card);
 }
 
+window.carregarSes = async function (sessao) {
+    const now = new Date();
+
+    const [ano, mes, dia] = sessao.date.split("-");
+    const [hora, minuto] = sessao.startTime.split(":");
+
+    const dataHoraSessao = new Date(
+        Number(ano),
+        Number(mes) - 1,
+        Number(dia),
+        Number(hora),
+        Number(minuto),
+        0
+    );
+
+    const canceladas = dataHoraSessao <= now && sessao.endTime == null && sessao.isCompleted?.data?.[0] == 0;
+
+    if (canceladas) {
+        const payload = {
+            isCanceled: 1
+        };
+
+        try {
+            let response;
+
+            response = await fetch(`${API}/agenda/${sessao.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify(payload)
+            });
+
+
+            const data = await response.json();
+
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao conectar com servidor");
+        }
+    }
+}
+
 // ===============================
 // CARREGAR SESSÕES DO CLIENTE
 // ===============================

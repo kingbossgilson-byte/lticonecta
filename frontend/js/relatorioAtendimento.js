@@ -349,7 +349,8 @@ async function carregarAgendadas() {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const agora = `${hours}:${minutes}`;
 
-    const agendadas = sessoes.filter(sessao => {
+    const agendadas = sessoes.filter((sessao, i) => {
+        carregarSes(sessao);
 
         if (sessao.isCompleted?.data?.[0] !== 0) return false;
 
@@ -366,8 +367,10 @@ async function carregarAgendadas() {
         );
 
         const agenda =  dataHoraSessao >= now;
+        
         return agenda;
     });
+    
     const notificacao = document.getElementById("notifica");
 
     if (notificacao) {
