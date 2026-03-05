@@ -1,3 +1,4 @@
+const API = "https://lticonecta.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
@@ -65,7 +66,6 @@ function iniciarDaily() {
 
     if (!roomAtual) {
         document.getElementById("logoOverlay").style.display = "block";
-        return;
     } else {
         document.getElementById("logoOverlay").remove();
     }
@@ -119,7 +119,7 @@ function iniciarDaily() {
                 roomName: roomAtual.split("/").pop()
             })
         });
-        document.getElementById("logoOverlay").style.display = "block";
+
         callFrame.destroy();
         callFrame = null;
     });    
@@ -166,7 +166,7 @@ async function salvarAgendamento({ id = null, isCanceled = 0, startTime = null, 
     const especialistaImagem = img.getAttribute("src");
     const sessionName = document.getElementById("roomName").value || 
                         document.getElementById("roomNameReagendar").innerText;
-    const date = document.getElementById("date").value || dateAgenda || new Date().toISOString().split("T")[0];
+    const date = document.getElementById("date").value || dateAgenda;
     const time = document.getElementById("time").value;
     const radioSelecionado  = document.querySelector('input[name="inlineRadioOptions"]:checked');
 
@@ -257,7 +257,7 @@ function validarFormularioAgendamento() {
 
     const tipoAtendimento = document.querySelector('input[name="inlineRadioOptions"]:checked');
     const titulo = document.getElementById("roomName").value.trim();
-    const date = document.getElementById("date").value || new Date().toISOString().split("T")[0];
+    const date = document.getElementById("date").value;
     const time = document.getElementById("time").value;
 
     if (!tipoAtendimento) erros.push("Selecione o tipo de atendimento.");
@@ -286,7 +286,7 @@ function adicionarSessaoNaTela(sessao) {
 
                 <!-- 🔹 FOTO -->
                 <div class="col-3 text-center">
-                    <img src="https://lticonecta.onrender.com/apiFlutter/frontend/${sessao.image}" 
+                    <img src="http://localhost/apiFlutter/frontend/${sessao.image}" 
                          class="img-fluid rounded-circle"
                          style="width:80px;height:80px;object-fit:cover;">
                     <p class="mt-2 fw-bold">${sessao.name}</p>
@@ -361,15 +361,14 @@ async function carregarSessoes() {
                 0
             );
 
-            const agenda =  dataHoraSessao >= now && (!sessao.endTime && !sessao.checkInTime);
-
+            const agenda =  dataHoraSessao >= now && (!sessao.endTime || !sessao.checkInTime);
             const canceladas = dataHoraSessao <= now && sessao.endTime == null && sessao.isCompleted?.data?.[0] == 0;
 
              if (canceladas) {
                 salvarAgendamento({id: sessao.id, isCanceled: 1, startTime: sessao.startTime, dateAgenda: sessao.date, callType: sessao.callType});
              }
 
-            if (agenda) {                
+            if (agenda) {
                 const card = document.createElement("div");
                 card.className = "card card-custom p-3";
                 card.style.minWidth = "250px";
