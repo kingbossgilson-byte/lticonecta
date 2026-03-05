@@ -92,7 +92,8 @@ exports.session = async (req, res) => {
                 Solicitante: ${clientName}
                 Data: ${date}
                 Horário: ${startTime}
-                Link da sala: ${dailyRoom?.url ?? 'Presencial'}`
+                Modelo: ${dailyRoom?.url ? 'Remoto' : 'Presencial'}
+                Link da sala: ${dailyRoom?.url ?? 'N/A'}`
               });
             } catch (error) {
               console.error('Erro ao enviar WhatsApp:', error.message);
