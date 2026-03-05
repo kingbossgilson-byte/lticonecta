@@ -18,6 +18,7 @@ const homeContainer = document.querySelector(".container.py-3");
 const atendimentoPage = document.getElementById("atendimentoPage");
 const btnAtendimento = document.getElementById("btnAtendimento");
 const btnAgendar = document.getElementById("btnAgendar");
+const btnFechar = document.getElementById("btnFechar");
 const perfilPage = document.getElementById("perfilPage");
 const relatorioChamadas = document.getElementById("relatorioChamadas");
 
