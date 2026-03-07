@@ -41,8 +41,7 @@
 <body style="
             background: url('./assets/images/2416e43d653933f1c510a598eee3801e.jpg') no-repeat center center fixed;
             background-size: cover;
-        "
->
+        ">
 
     <!-- Jitsi -->
     <!-- <div id="jitsiContainer" style="height: 80vh; width: 100%; display: none;"></div> -->
@@ -57,27 +56,27 @@
 
         <!-- Tabs -->
         <ul class="nav nav-pills justify-content-between tab-custom mb-4">
-        <li class="nav-item  text-center">
-            <button id="tabAgendada" class="nav-link active w-100">
-            Agendada(s)
-            </button>
-        </li>
+            <li class="nav-item  text-center">
+                <button id="tabAgendada" class="nav-link active w-100">
+                    Agendada(s)
+                </button>
+            </li>
 
-        <li class="nav-item  text-center">
-            <button id="tabCompletadas" class="nav-link  w-100">
-            Completada(s)
-            </button>
-        </li>
+            <li class="nav-item  text-center">
+                <button id="tabCompletadas" class="nav-link  w-100">
+                    Completada(s)
+                </button>
+            </li>
 
-        <li class="nav-item  text-center">
-            <button id="tabCanceladas" class="nav-link  w-100">
-            Cancelada(s)
-            </button>
-        </li>
+            <li class="nav-item  text-center">
+                <button id="tabCanceladas" class="nav-link  w-100">
+                    Cancelada(s)
+                </button>
+            </li>
         </ul>
 
-        <!-- Card Relatorio -->     
-            <div  id="sessionsListRelatorio"></div>
+        <!-- Card Relatorio -->
+        <div id="sessionsListRelatorio"></div>
     </div>
 
 
@@ -97,7 +96,6 @@
     <div id="perfilPage" style="display: none">
         <div class="bg-primary text-white p-4 rounded-bottom" style="background: #1f4e79 !important">
             <h5 class="text-center mb-4">Perfil</h5>
-
             <div class="d-flex align-items-center">
                 <img src="" id="perfilImagem" class="rounded-circle me-3" width="70" height="70" />
 
@@ -110,59 +108,56 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="container mt-3">
-            <div onclick="editarPerfil()" class="card p-3 mb-3 shadow-sm" style="cursor: pointer">
-                <div class="d-flex justify-content-between align-items-center">
+                <div onclick="editarPerfil()" class="option-card d-flex justify-content-between align-items-center p-3 shadow-sm">
                     <div class="d-flex align-items-center gap-2">
+                        <div class="icon-box icon-client me-3">
                         <i class="bi bi-person-circle" style="font-size: 2rem; color: cornflowerblue;"></i>
-                        <span>Editar Perfil</span>
+                        </div>
+                        <strong>Editar Perfil</strong>
                     </div>
                     <i class="bi bi-chevron-right"></i>
                 </div>
-            </div>
-
-            <div id="cadProfissionais" onclick="cadastrarProfissional()" class="card p-3 mb-3 shadow-sm" style="cursor: pointer">
-                <div class="d-flex justify-content-between align-items-center">
+                <div  id="cadProfissionais" onclick="cadastrarProfissional()" class="option-card d-flex justify-content-between align-items-center  p-3 shadow-sm">
                     <div class="d-flex align-items-center gap-2">
-                        <i class="bi bi-person-fill-add" style="font-size: 2rem; color: darkgreen;"></i>
-                        <span>Cadastrar Profissionais</span>
+                        <div class="icon-box icon-add me-3">
+                        <i class="bi bi-person-fill-add" style="font-size: 2rem;"></i>
+                        </div>
+                        <strong>Cadastrar Profissionais</strong>
                     </div>
                     <i class="bi bi-chevron-right"></i>
                 </div>
-            </div>
-
-            <div onclick="mudarSenha()" class="card p-3 mb-3 shadow-sm" style="cursor: pointer">
-                <div class="d-flex justify-content-between align-items-center">
+                <div onclick="mudarSenha()" class=" option-card d-flex justify-content-between align-items-center p-3 shadow-sm">
                     <div class="d-flex align-items-center gap-2">
-                        <i class="bi bi-shield-lock" style="font-size: 2rem; color: crimson;"></i>
-                        <span>Mudar Senha</span>
+                        <div class="icon-box icon-pass me-3">
+                        <i class="bi bi-shield-lock" style="font-size: 2rem; "></i>
+                        </div>
+                        <strong>Mudar Senha</strong>
                     </div>
                     <i class="bi bi-chevron-right"></i>
                 </div>
-            </div>
-
-            <div onclick="logout()" class="card p-3 shadow-sm text-danger" style="cursor: pointer">
-                <div class="d-flex justify-content-between align-items-center">
+                <div onclick="logout()" class=" option-card d-flex justify-content-between align-items-center p-3 shadow-sm text-danger">
                     <div class="d-flex align-items-center gap-2">
+                        <div class="icon-box icon-sair me-3">
                         <i class="bi bi-box-arrow-right"></i>
-                        <span>Sair</span>
+                        </div>
+                        <strong>Sair</strong>
                     </div>
                     <i class="bi bi-chevron-right"></i>
                 </div>
             </div>
-        </div>
     </div>
 
     <!-- TELA DE ATENDIMENTO (inicialmente escondida) -->
     <div id="atendimentoPage" style="display: none; height: 95vh">
         <div id="videoContainer" style="width: 100%; height: 95%">
-        </div>        
+        </div>
         <!-- <button onclick="voltarHome()" class="btn btn-light position-absolute m-2">
                     ← Voltar
-             </button> --> 
+             </button> -->
         <div id="logoOverlay">
-            <img src="./assets/images/1.png"/>
+            <img src="./assets/images/1.png" />
         </div>
 
     </div>
@@ -170,15 +165,16 @@
         <!-- HEADER -->
         <div class="text-center mb-3 d-flex justify-content-center">
             <div class="header-title">
-                <img src="./assets/images/2.png" class="rounded float-start" style="width: 300px;" />
+                <img src="./assets/images/2-removebg-preview.png" class="rounded float-start" style="width: 300px;" />
             </div>
         </div><br><br>
         <div class="text-center mb-3 d-flex justify-content-center">
-        <h3  class="m-2" >Seja Bem Vindo(a)</h3><h3 class="m-2"  id="nomeBemVindo"></h3>
+            <h3 class="m-2">Seja Bem Vindo(a)</h3>
+            <h3 class="m-2" id="nomeBemVindo"></h3>
         </div>
 
         <!-- BUSCA -->
-<!--         <div class="mb-4">
+        <!--         <div class="mb-4">
             <input type="text" class="form-control rounded-pill" placeholder="Pesquisar" />
         </div>
  -->
@@ -228,7 +224,7 @@
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <strong>Abaixo segue como fazer um agendamento</strong> 
+                            <h6>Abaixo segue como fazer um agendamento</h6> 
                             <div class="p-2">
                                 <summary class="m-2">Selecione um <code style="color: blue;">profissional</code> em Destaque/Preferencia</summary>
                                 <summary class="m-2">Clique no botão <code  style="color: blue;">Agendar Reunião</code></summary>
@@ -237,7 +233,7 @@
                                 <summary class="m-2">Selecione a <code  style="color: blue;">data</code> do agendamento</summary>
                                 <summary class="m-2">Selecione a <code  style="color: blue;">hora</code> do agendamento</summary>
                             </div>
-                            <strong>Agora só clicar em <code  style="color: blue;">Agendar</code> e pronto agendado!</strong>
+                            <h6>Agora só clicar em <code  style="color: blue;">Agendar</code> e pronto agendado!</h6>
                         </div>
                     </div>
                 </div>
@@ -252,7 +248,7 @@
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <strong>Abaixo segue como fazer um reagendamento</strong> 
+                            <h6>Abaixo segue como fazer um reagendamento</h6> 
                             <div class="p-2">
                                 <summary class="m-2">Nas informações <code style="color: blue;">Minha Agenda</code> mostrará seus agendamentos</summary>
                                 <summary class="m-2">Clique no botão <code  style="color: blue;">Reagendar</code></summary>
@@ -263,7 +259,7 @@
                                 <summary class="m-3">Gerar o <code  style="color: blue;">QRcode da reunião</code></summary>
                                 </summary>
                             </div>
-                            <!-- <strong>Agora só clicar em <code  style="color: blue;">Agendar</code> e pronto agendado!</strong> -->
+                            <!-- <h6>Agora só clicar em <code  style="color: blue;">Agendar</code> e pronto agendado!</h6> -->
                         </div>
                     </div>
                 </div>
@@ -278,20 +274,19 @@
                     <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <strong>Na aba de Minha agenda/Relatórios terá acesso á:</strong> 
+                            <h6>Na aba de Minha agenda/Relatórios terá acesso á:</h6> 
                             <div class="p-2">
                                 <summary class="m-2">Todos os seus agendamentos futuros com dia/hora e tipo</summary>
                                 <summary class="m-2">Agendamentos completos, aqueles que foram efetuados devidamente</summary>
-                                <summary class="m-2">Os cancelados, que por algum motivo foi cancelado ou não efetivados devidamente</summary>
+                                <summary class="m-2">Os cancelados, que por algum motivo foi cancelado ou não efetivadosdevidamente</summary>
                             </div>                       
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <!-- ESPECIALISTAS -->
-        <h3 class="mb-3">Especialistas em destaque</h3>
+        <h3 class="mb-3">Profissionais em destaque</h3>
         <div class="especialistas-wrapper">
             <div class="horizontal-scroll mt-4 mb-4" id="especialistasContainer">
                 <!-- Cards serão inseridos aqui -->
@@ -302,19 +297,19 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
-                <div class="modal-header">
-                    <h5 class="modal-title">QR Code da Reunião</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title">QR Code da Reunião</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
 
-                <div class="modal-body d-flex justify-content-center">
-                    <div id="qrModalBody"></div>
-                </div>
+                    <div class="modal-body d-flex justify-content-center">
+                        <div id="qrModalBody"></div>
+                    </div>
 
                 </div>
             </div>
         </div>
-        
+
         <!-- AGENDA -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -328,8 +323,8 @@
                     </div>
                     <div class="modal-body pt-0">
                         <!-- HEADER -->
-                         <div id="idReagendamento" style="display: none;"></div>
-                         <div id="agendaTelefone" style="display: none;"></div>
+                        <div id="idReagendamento" style="display: none;"></div>
+                        <div id="agendaTelefone" style="display: none;"></div>
                         <div class="top-header">
                             <!-- <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="m-0">Agendar Compromisso</h5>
@@ -340,8 +335,8 @@
                                 <div class="d-flex align-items-center">
                                     <img id="agendaProfilePic" class="specialist-img" />
                                     <div>
-                                        <h3 class="m-2" id="agendaUsername"></h3>
-                                        <small class="m-2" id="agendaDesignation"></small>
+                                        <h3 class="m-2" id="agendaUsername">N/A</h3>
+                                        <small class="m-2" id="agendaDesignation">N/A</small>
                                     </div>
                                 </div>
 
@@ -358,14 +353,16 @@
                                 <!-- TÍTULO -->
                                 <h3 id="roomNameReagendar"></h3>
                                 <div class="form-check form-check-inline justify-content-center">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Remoto">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio1" value="Remoto">
                                     <label class="form-check-label" for="inlineRadio1">Atendimento On-Line</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Presencial">
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="inlineRadio2" value="Presencial">
                                     <label class="form-check-label" for="inlineRadio2">Atendimento Presencial</label>
                                 </div>
-                                <div class="mb-3"  id="roomNameTitulo">
+                                <div class="mb-3" id="roomNameTitulo">
                                     <label class="form-label" id="roomNameTitulo"></label>
                                     <input type="text" id="roomName" class="form-control"
                                         placeholder="Informe o nome do compromisso" />
@@ -391,7 +388,8 @@
                     </div>
                     <!-- BOTÃO FIXO -->
                     <div class="modal-footer">
-                        <button id="btnFechar" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button id="btnFechar" type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Fechar</button>
                         <a id="linkFechar" href="index.html" class="btn btn-secondary" style="display: none;">
                             Fechar
                         </a>
@@ -418,43 +416,45 @@
         </div>
 
     </div>
-<!-- Bottom Navigation -->
+    <!-- Bottom Navigation -->
     <div class="bottom-nav">
-    <div class="container mt-2">
-        <div class="row text-center">
+        <div class="container mt-2">
+            <div class="row text-center">
 
-        <div class="col">
-            <a href="index.html" class="active">
-            <i class="bi bi-house-fill"></i>
-            Home
-            </a>
-        </div>
+                <div class="col">
+                    <a href="index.html" class="active">
+                        <i class="bi bi-house-fill"></i>
+                        Home
+                    </a>
+                </div>
 
-        <div class="col">
-            <a href="#" id="btnAtendimento">
-            <i class="bi bi-camera-video-fill" style="color: rgb(255, 60, 0);"></i>
-            Atendimento
-            </a>
-        </div>
+                <div class="col">
+                    <a href="#" id="btnAtendimento">
+                        <i class="bi bi-camera-video-fill" style="color: rgb(255, 60, 0);"></i>
+                        Atendimento
+                    </a>
+                </div>
 
-        <div class="col">
-            <a href="#" onclick="mostrarRelatorio()">
-            <i class="bi bi-bar-chart-steps" style="color: blue;"></i>
-            Minha agenda/Relatório
-        </a>
-        <span
-            class="position-absolute top-0 start-1 translate-middle badge rounded-pill bg-danger"><small
-                id="notifica"></small></span>
-        </div>
+                <div class="col">
+                    <a href="#" onclick="mostrarRelatorio()">
+                        <i class="bi bi-bar-chart-steps" style="color: blue;">
+                                                <span
+                    class="position-absolute top-0 start-1 translate-middle badge rounded-pill bg-danger"><small
+                        id="notifica"></small></span>
+                        </i>
+                        Minha agenda/Relatório
+                    </a>
 
-        <div class="col">
-            <a href="#" onclick="mostrarPerfil()">
-            <i class="bi bi-person-circle" style="color: green;"></i>
-            Perfil</a>
-        </div>
+                </div>
 
+                <div class="col">
+                    <a href="#" onclick="mostrarPerfil()">
+                        <i class="bi bi-person-circle" style="color: green;"></i>
+                        Perfil</a>
+                </div>
+
+            </div>
         </div>
-    </div>
     </div>
     <script src="https://unpkg.com/@daily-co/daily-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -468,6 +468,7 @@
     <script src="js/schedule.js"></script>
     <script src="./js/profile.js"></script>
     <script src="./js/relatorioAtendimento.js"></script>
+    <script src="./js/alertToast.js"></script>
 </body>
 
 </html>

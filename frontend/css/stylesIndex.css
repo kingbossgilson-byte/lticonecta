@@ -283,6 +283,18 @@ body {
             background:#e2d4ff;
             color:#7b2cbf;
         }
+        .icon-add{
+            background:#40ce6498;
+            color:#043a12;
+        }
+        .icon-pass{
+            background:#7a2cbf80;
+            color:#1d1b1f;
+        }
+        .icon-sair{
+            background:#d8529181;
+            color:#a30707;
+        }
 
         .footer-text{
             font-size:14px;

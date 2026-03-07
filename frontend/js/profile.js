@@ -2,10 +2,10 @@
 // CONTROLE DE PÁGINAS
 // ===============================
 
-function mostrarPerfil() {    
+function mostrarPerfil() {
     const admin = localStorage.getItem("usuarioIsAdministrator") == `1`;
 
-    if(admin){
+    if (admin) {
         document.getElementById("cadProfissionais").style.display = "block";
 
     } else {
@@ -63,7 +63,7 @@ async function carregarPerfil() {
         return;
     }
 
-    const response = await fetch(`/users/id/${userId}`);
+    const response = await fetch(`${API}/users/id/${userId}`);
     const user = await response.json();
 
     document.getElementById("perfilNome").innerText = user.username;
@@ -109,19 +109,21 @@ if (overlay) {
 }
 
 function mudarSenha() {
-    openSheet("Alterar Senha", `
-        <div class="mb-3">
-            <label>Senha Atual</label>
+    openSheet(
+        "Alterar Senha", `
+        <span  class="d-flex justify-content-center p-0 mb-0" id="perfilToast"></span>
+        <div class="mb-3 p-2">
+            <label class="p-2">Senha Atual</label>
             <input type="password" id="senhaAtual" class="form-control">
         </div>
 
-        <div class="mb-3">
-            <label>Nova Senha</label>
+        <div class="mb-3 p-2">
+            <label class="p-2">Nova Senha</label>
             <input type="password" id="novaSenha" class="form-control">
         </div>
 
-        <div class="mb-3">
-            <label>Confirmar Nova Senha</label>
+        <div class="mb-3 p-2">
+            <label class="p-2">Confirmar Nova Senha</label>
             <input type="password" id="confirmarSenha" class="form-control">
         </div>
 
@@ -131,6 +133,7 @@ function mudarSenha() {
     `);
 }
 
+
 async function salvarNovaSenha() {
     const userId = localStorage.getItem("usuarioId");
     const senhaAtual = document.getElementById("senhaAtual").value;
@@ -138,16 +141,17 @@ async function salvarNovaSenha() {
     const confirmarSenha = document.getElementById("confirmarSenha").value;
 
     if (!senhaAtual || !novaSenha || !confirmarSenha) {
-        alert("Preencha todos os campos");
+
+        toastNaTela("Preencha todos os campos", 'warning', 'exclamation-circle-fill', 'yellow');
         return;
     }
 
     if (novaSenha !== confirmarSenha) {
-        alert("As senhas não coincidem");
+        toastNaTela("As senhas digitadas são diferentes", 'warning', 'exclamation-circle-fill', 'yellow');
         return;
     }
 
-    const response = await fetch(`/users/password/${userId}`, {
+    const response = await fetch(`${API}/users/password/${userId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -161,9 +165,9 @@ async function salvarNovaSenha() {
     const data = await response.json();
 
     if (response.ok) {
-        alert("Senha alterada com sucesso!");
+        toastNaTela("Senha alterada com sucesso!", 'success', 'check-circle-fill', 'green');
     } else {
-        alert(data.error || "Erro ao alterar senha");
+        toastNaTela(data.error || "Erro ao alterar senha", 'danger', 'exclamation-triangle-fill', 'darkred');
     }
 }
 
@@ -174,9 +178,10 @@ function editarPerfil() {
     const nome = localStorage.getItem("usuarioNome");
     const email = localStorage.getItem("usuarioEmail");
     const designation = localStorage.getItem("usuarioDescricao");
-    const fileInput = localStorage.getItem("usuarioFoto");    
+    const fileInput = localStorage.getItem("usuarioFoto");
 
     openSheet("Editar Perfil", `
+        <span  class="d-flex justify-content-center p-0 mb-0" id="perfilToast"></span>
         <div class="mb-3">
             
             <!-- input escondido -->
@@ -213,9 +218,10 @@ function editarPerfil() {
 
 function cadastrarProfissional() {
 
-    
+
     openSheet("Cadastrar Profissionais", `
         <form id="formProfissional">
+        <span  class="d-flex justify-content-center p-0 mb-0" id="perfilToast"></span>
             <div class="mb-3">
 
             
@@ -268,32 +274,38 @@ function cadastrarProfissional() {
 
 
 async function salvarPerfil() {
+    try {
 
-    const userId = localStorage.getItem("usuarioId");
+        const userId = localStorage.getItem("usuarioId");
 
-    const formData = new FormData();
-    formData.append("username", document.getElementById("editNome").value);
-    formData.append("email", document.getElementById("editEmail").value);
-    formData.append("designation", document.getElementById("editDescricao").value);
+        const formData = new FormData();
+        formData.append("username", document.getElementById("editNome").value);
+        formData.append("email", document.getElementById("editEmail").value);
+        formData.append("designation", document.getElementById("editDescricao").value);
 
-    const fileInput = document.getElementById("editFoto");
-    if (fileInput.files[0]) {
-        formData.append("profilePic", fileInput.files[0]);
-    }
+        const fileInput = document.getElementById("editFoto");
+        if (fileInput.files[0]) {
+            formData.append("profilePic", fileInput.files[0]);
+        }
 
-    const response = await fetch(`/users/profile/${userId}`, {
-        method: "PUT",
-        body: formData
-    });
+        const response = await fetch(`${API}/users/profile/${userId}`, {
+            method: "PUT",
+            body: formData
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    if (response.ok) {
-        alert("Perfil atualizado!");
-        closeSheet();
-        carregarPerfil();
-    } else {
-        alert(data.error);
+        if (response.ok) {
+            toastNaTela("Perfil atualizado com sucesso!", 'success', 'check-circle-fill', 'green');
+            // closeSheet();
+            carregarPerfil();
+        } else {
+            toastNaTela(data.error || "Erro ao alterar perfil", 'danger', 'exclamation-triangle-fill', 'darkred');
+        }
+
+    } catch (error) {
+        console.error(error);
+        toastNaTela("Erro de conexão com servidor", 'danger', 'wifi-off', 'darkred');
     }
 }
 
@@ -307,12 +319,12 @@ async function salvarProfissional() {
     const fileInput = document.getElementById("profFoto");
 
     if (!fileInput.files.length) {
-        alert("A foto é obrigatória.");
+        toastNaTela("A foto é obrigatório.", 'warning', 'exclamation-circle-fill', 'yellow');
         return;
     }
 
     if (!nome || !email || !whatsapp || !descricao) {
-        alert("Preencha todos os campos.");
+        toastNaTela("Preencha todos os campos", 'warning', 'exclamation-circle-fill', 'yellow');
         return;
     }
 
@@ -341,21 +353,17 @@ async function salvarProfissional() {
         const data = await response.json();
 
         if (response.ok) {
-            const alertDiv = document.createElement("div");
-            alertDiv.className = "alert alert-success mt-2";
-            alertDiv.role = "alert";
-            alertDiv.innerText = "Cadastro realizado com sucesso!";
-            document.getElementById("formProfissional").parentElement.appendChild(alertDiv);
+            toastNaTela("Cadastro realizado com sucesso!", 'success', 'check-circle-fill', 'green');
 
             // Limpa form e modal
             document.getElementById("formProfissional").reset();
         } else {
-            alert(data.error || "Erro ao salvar cadastro");
+            toastNaTela(data.error || "Erro ao salvar cadastro", 'danger', 'exclamation-triangle-fill', 'darkred');
         }
 
     } catch (error) {
         console.error(error);
-        alert("Erro ao conectar com servidor");
+        toastNaTela("Erro ao conectar com servidor", 'danger', 'exclamation-triangle-fill', 'darkred');
     }
 }
 
