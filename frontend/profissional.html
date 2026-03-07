@@ -2,7 +2,7 @@
     const token = localStorage.getItem("token");
 
     if (!token) {
-        window.location.replace("login.html");
+        window.location.replace("call.html");
     } else {
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));
@@ -10,11 +10,11 @@
 
             if (payload.exp < agora) {
                 localStorage.clear();
-                window.location.replace("login.html");
+                window.location.replace("call.html");
             }
         } catch (e) {
             localStorage.clear();
-            window.location.replace("login.html");
+            window.location.replace("call.html");
         }
     }
 </script>
