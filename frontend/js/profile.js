@@ -47,7 +47,7 @@ function mostrarRelatorio() {
 function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("recentes");
-    window.location.href = "login.html";
+    window.location.href = "call.html";
 }
 
 // ===============================
@@ -59,7 +59,7 @@ async function carregarPerfil() {
     const userId = localStorage.getItem("usuarioId");
 
     if (!userId) {
-        window.location.href = "login.html";
+        window.location.href = "call.html";
         return;
     }
 
