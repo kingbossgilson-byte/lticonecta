@@ -33,7 +33,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
     let email = document.getElementById("inputEmail").value;
     let password = document.getElementById("inputPassword").value;
-    let accountType = document.getElementById("accountType").value;
+    const accountType = localStorage.getItem("tipoLogin");
     
 
     try {
