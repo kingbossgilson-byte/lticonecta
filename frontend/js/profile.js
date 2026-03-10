@@ -6,11 +6,8 @@ function mostrarPerfil() {
     const admin = localStorage.getItem("usuarioIsAdministrator") == `1`;
 
     if (admin) {
-        document.getElementById("cadProfissionais").style.display = "block";
+        document.getElementById("cadProfissionais").classList.remove("d-none");
 
-    } else {
-
-        document.getElementById("cadProfissionais").style.display = "none";
     }
 
     document.querySelector(".container.py-3").style.display = "none";
