@@ -36,7 +36,7 @@ async function carregarEspecialista(id) {
         document.getElementById("agendaDesignation").innerText = user.designation;
         document.getElementById("agendaScore").innerText = "★ " + user.score;
         document.getElementById("agendaProfilePic").src =
-            user.profilePic || "./assets/images/default.png";
+            user.profilePic || "assets/images/default.png";
 
         // salvar globalmente se precisar depois
         especialistaNome = user.username;
@@ -429,7 +429,7 @@ async function carregarSessoes() {
 
                 card.innerHTML = `
                     <div class="d-flex align-items-center">
-                        <img src="${sessao.image || './assets/images/default.png'}"
+                        <img src="${sessao.image || 'assets/images/default.png'}"
                             class="specialist-img me-2">
                         <div>
                             <strong>${sessao.name}</strong><br>

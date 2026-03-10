@@ -45,7 +45,7 @@ async function carregarEspecialista(id) {
         document.getElementById("agendaDesignation").innerText = user.designation;
         document.getElementById("agendaScore").innerText = "★ " + user.score;
         document.getElementById("agendaProfilePic").src =
-            user.profilePic || "./assets/images/default.png";
+            user.profilePic || "assets/images/default.png";
 
         // salvar globalmente se precisar depois
         especialistaNome = user.username;
@@ -72,7 +72,7 @@ function renderEspecialistas(users) {
         div.innerHTML = `
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center">
-                    <img src="${user.profilePic || './assets/images/default.png'}"
+                    <img src="${user.profilePic || 'assets/images/default.png'}"
                          class="specialist-img me-3">
                     <div>
                         <strong>${user.username}</strong>
@@ -122,7 +122,7 @@ function abrirModal(user) {
     document.getElementById("agendaDesignation").innerText = user.designation;
     document.getElementById("agendaScore").innerText = "★".repeat(score);
     document.getElementById("agendaProfilePic").src =
-    user.profilePic || "./assets/images/default.png";
+    user.profilePic || "assets/images/default.png";
     
     // Criar instância da modal Bootstrap
     const modal = new bootstrap.Modal(
@@ -203,7 +203,7 @@ function renderRecentes() {
         card.style.minWidth = "150px";
 
         card.innerHTML = `
-            <img src="${user.profilePic || './assets/images/default.png'}"
+            <img src="${user.profilePic || 'assets/images/default.png'}"
                  class="specialist-img mb-2" />
             <strong>${user.username}</strong>
         `;
