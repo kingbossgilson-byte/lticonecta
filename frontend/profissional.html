@@ -59,7 +59,7 @@
     <div id="perfilPage" style="display: none">
         <div class="bg-primary text-white p-4 rounded-bottom" style="background: #1f4e79 !important">
             <h5 class="text-center mb-4">Perfil</h5>
-
+            <span class="d-flex justify-content-center p-0 mt-3 mb-0" id="perfilToast"></span>
             <div class="d-flex align-items-center">
                 <img src="" id="perfilImagem" class="rounded-circle me-3" width="70" height="70" />
 
@@ -74,45 +74,47 @@
         </div>
 
         <div class="container mt-3">
-            <div onclick="editarPerfil()" class="card p-3 mb-3 shadow-sm" style="cursor: pointer">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center gap-2">
+            <div onclick="editarPerfil()"
+                class="option-card d-flex justify-content-between align-items-center p-3 shadow-sm">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="icon-box icon-client me-3">
                         <i class="bi bi-person-circle" style="font-size: 2rem; color: cornflowerblue;"></i>
-                        <span>Editar Perfil</span>
                     </div>
-                    <i class="bi bi-chevron-right"></i>
+                    <strong>Editar Perfil</strong>
                 </div>
+                <i class="bi bi-chevron-right"></i>
             </div>
-
             <div id="cadProfissionais" onclick="cadastrarProfissional()" class="card p-3 mb-3 shadow-sm"
                 style="cursor: pointer">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center gap-2">
-                        <i class="bi bi-person-fill-add" style="font-size: 2rem; color: darkgreen;"></i>
+                    <div class="option-card d-flex align-items-center gap-2">
+                        <div class="icon-box icon-add me-3">
+                            <i class="bi bi-person-fill-add" style="font-size: 2rem; color: darkgreen;"></i>
+                        </div>
                         <span>Cadastrar Profissionais</span>
                     </div>
                     <i class="bi bi-chevron-right"></i>
                 </div>
             </div>
-
-            <div onclick="mudarSenha()" class="card p-3 mb-3 shadow-sm" style="cursor: pointer">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center gap-2">
-                        <i class="bi bi-shield-lock" style="font-size: 2rem; color: crimson;"></i>
-                        <span>Mudar Senha</span>
+            <div onclick="mudarSenha()"
+                class=" option-card d-flex justify-content-between align-items-center p-3 shadow-sm">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="icon-box icon-pass me-3">
+                        <i class="bi bi-shield-lock" style="font-size: 2rem; "></i>
                     </div>
-                    <i class="bi bi-chevron-right"></i>
+                    <strong>Mudar Senha</strong>
                 </div>
+                <i class="bi bi-chevron-right"></i>
             </div>
-
-            <div onclick="logout()" class="card p-3 shadow-sm text-danger" style="cursor: pointer">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center gap-2">
+            <div onclick="logout()"
+                class=" option-card d-flex justify-content-between align-items-center p-3 shadow-sm text-danger">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="icon-box icon-sair me-3">
                         <i class="bi bi-box-arrow-right"></i>
-                        <span>Sair</span>
                     </div>
-                    <i class="bi bi-chevron-right"></i>
+                    <strong>Sair</strong>
                 </div>
+                <i class="bi bi-chevron-right"></i>
             </div>
         </div>
     </div>
