@@ -66,7 +66,7 @@ async function carregarPerfil() {
     document.getElementById("perfilNome").innerText = user.username;
     document.getElementById("perfilEmail").innerText = user.email || "Sem email";
     document.getElementById("perfilDescricao").innerText = user.designation || "Sem descrição";
-    document.getElementById("perfilImagem").src = user.profilePic || "./assets/images/default.jpg";
+    document.getElementById("perfilImagem").src = user.profilePic || "./assets/images/default.png";
 
     // Atualiza localStorage também se quiser manter cache
     localStorage.setItem("usuarioNome", user.username);

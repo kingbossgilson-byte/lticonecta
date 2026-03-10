@@ -180,7 +180,7 @@ function renderizarSessoes(lista, status) {
             card.innerHTML = `
                 <div class="d-flex justify-content-between">
                     <div class="d-flex align-items-center">
-                        <img src="${sessao.image || './assets/images/default.jpg'}"
+                        <img src="${sessao.image || './assets/images/default.png'}"
                         class="specialist-img me-2">
                         <div>
                             <h6 class="m-2">${sessao.name}</h6>
