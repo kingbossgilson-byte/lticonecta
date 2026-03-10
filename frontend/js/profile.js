@@ -167,7 +167,7 @@ async function salvarNovaSenha() {
     if (response.ok) {
         toastNaTela("Senha alterada com sucesso!", 'success', 'check-circle-fill', 'green');
     } else {
-        toastNaTela(data.error || "Erro ao alterar senha", 'danger', 'exclamation-triangle-fill', 'darkred');
+        toastNaTela("Erro ao alterar senha", 'danger', 'exclamation-triangle-fill', 'darkred');
     }
 }
 
@@ -300,7 +300,7 @@ async function salvarPerfil() {
             // closeSheet();
             carregarPerfil();
         } else {
-            toastNaTela(data.error || "Erro ao alterar perfil", 'danger', 'exclamation-triangle-fill', 'darkred');
+            toastNaTela("Erro ao alterar perfil", 'danger', 'exclamation-triangle-fill', 'darkred');
         }
 
     } catch (error) {
@@ -358,7 +358,7 @@ async function salvarProfissional() {
             // Limpa form e modal
             document.getElementById("formProfissional").reset();
         } else {
-            toastNaTela(data.error || "Erro ao salvar cadastro", 'danger', 'exclamation-triangle-fill', 'darkred');
+            toastNaTela("Erro ao salvar cadastro", 'danger', 'exclamation-triangle-fill', 'darkred');
         }
 
     } catch (error) {
