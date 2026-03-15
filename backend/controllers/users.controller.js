@@ -95,6 +95,8 @@ exports.getById = (req, res) => {
 
 
 exports.updateUser = (req, res) => {
+  console.log("FILE:", req.file);
+  console.log("BODY:", req.body);
   const { id } = req.params;
   const { username, email, summary, designation } = req.body;
 
